@@ -30,6 +30,11 @@ type Config struct {
 	TwitterClientID     string
 	TwitterClientSecret string
 	TwitterRedirectURI  string
+
+	// Tiktok
+	TiktokClientID     string
+	TiktokClientSecret string
+	TiktokRedirectURI  string
 }
 
 var (
@@ -64,6 +69,11 @@ func LoadConfig() *Config {
 			TwitterClientID:     os.Getenv("TWITTER_CLIENT_ID"),
 			TwitterClientSecret: os.Getenv("TWITTER_CLIENT_SECRET"),
 			TwitterRedirectURI:  os.Getenv("TWITTER_REDIRECT_URI"),
+
+			// Tiktok
+			TiktokClientID:     os.Getenv("TIKTOK_CLIENT_ID"),
+			TiktokClientSecret: os.Getenv("TIKTOK_CLIENT_SECRET"),
+			TiktokRedirectURI:  os.Getenv("TIKTOK_REDIRECT_URI"),
 		}
 	})
 
