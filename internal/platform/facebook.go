@@ -25,7 +25,7 @@ func NewFacebookAuthService(cfg *config.Config) *FacebookAuthService {
 		ClientID:     cfg.MetaAppID,
 		ClientSecret: cfg.MetaAppSecret,
 		RedirectURL:  cfg.MetaRedirectURI,
-		Scopes:       []string{"user_friends"},
+		Scopes:       []string{"public_profile"},
 		Endpoint:     facebook.Endpoint,
 	}
 	return &FacebookAuthService{
@@ -113,8 +113,8 @@ func (s *FacebookService) getProfile() (*FacebookUser, error) {
 }
 
 // checkFollowing checks if a user follows another user
-func (s *FacebookService) checkFollowing(userID, targetUserID string) (bool, error) {
-	reqURL := fmt.Sprintf("https://graph.facebook.com/v18.0/%s/friends?access_token=%s", userID, s.accessToken)
+func (s *FacebookService) checkFollowing(userID, targetPageID string) (bool, error) {
+	reqURL := fmt.Sprintf("https://graph.facebook.com/v18.0/%s/subscribedto?access_token=%s", userID, s.accessToken)
 
 	resp, err := s.httpClient.Get(reqURL)
 	if err != nil {
@@ -134,7 +134,7 @@ func (s *FacebookService) checkFollowing(userID, targetUserID string) (bool, err
 
 	// Check if the target user is in the list of friends
 	for _, user := range response.Data {
-		if user.ID == targetUserID {
+		if user.ID == targetPageID {
 			return true, nil
 		}
 	}
